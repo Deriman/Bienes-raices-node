@@ -1,16 +1,8 @@
 import express from 'express'
+import {login, register} from '../controllers/usuarioController.js'
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
-    res.json({
-        message: 'Hola Mundo!!'
-    })
-})
-router.get('/us', (req, res) => {
-    res.json({
-        message: 'Hola US!!'
-    })
-})
-
+router.get('/login', login )
+router.get('/register', register)
 export default router

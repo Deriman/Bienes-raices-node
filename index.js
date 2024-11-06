@@ -8,7 +8,7 @@ app.set('views', './views')
 
 const port = 3000
 
-app.use('/', usersRoutes )
+app.use('/auth', usersRoutes )
 
 app.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`)
