@@ -22,9 +22,17 @@ const register = async (req, res) => {
         .isLength({ min: 6}).withMessage('El password debe contener al menos 6 caracteres').run(req)
     await check('repetir-password')
         .equals('password').withMessage('Los passwords deben ser iguales').run(req)
+
     let validation = validationResult(req)
-    //const user = await User.create(req.body)
-    res.json(validation.array())     
+
+    if (!validation.isEmpty()){
+        return res.render('auth/form-register', {
+            pagina: "Crear Cuenta",
+            errors: validation.array()
+        })
+    }
+    const user = await User.create(req.body)
+    
 }
 const forgotPassword = (req, res) => {
     res.render('auth/forgot-password', {
