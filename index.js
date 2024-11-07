@@ -18,7 +18,7 @@ app.set('views', './views')
 
 app.use(express.static('public'))
 
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.use('/auth', usersRoutes )
 
