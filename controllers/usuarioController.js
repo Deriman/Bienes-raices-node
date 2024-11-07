@@ -1,5 +1,6 @@
 const login = (req, res) => {
     res.render('auth/login', {
+         pagina: "Iniciar sesión"
     })
 }
 const register = (req, res) => {
@@ -8,6 +9,8 @@ const register = (req, res) => {
         
     })
 }
+
+
 
 export {
     login, 
