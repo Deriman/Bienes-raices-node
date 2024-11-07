@@ -1,13 +1,17 @@
-const login = (req, res) => {
-    res.render('auth/login', {
+const form_login = (req, res) => {
+    res.render('auth/form-login', {
          pagina: "Iniciar sesión"
     })
 }
-const register = (req, res) => {
-    res.render('auth/register', {
+const form_register = (req, res) => {
+    res.render('auth/form-register', {
         pagina: "Crear Cuenta"
         
     })
+}
+const register = (req, res) => {
+    console.log("Registrando....")
+        
 }
 const forgotPassword = (req, res) => {
     res.render('auth/forgot-password', {
@@ -19,7 +23,8 @@ const forgotPassword = (req, res) => {
 
 
 export {
-    login, 
-    register,
-    forgotPassword
+    form_login, 
+    form_register,
+    forgotPassword,
+    register
 }
