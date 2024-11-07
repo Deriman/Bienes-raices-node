@@ -49,7 +49,12 @@ const register = async (req, res) => {
             }
         })
     }
-    const user = await User.create(req.body)
+    const user = await User.create({
+        name,
+        email,
+        password,
+        token: 123
+    })
     
 }
 const forgotPassword = (req, res) => {
