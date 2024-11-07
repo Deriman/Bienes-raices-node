@@ -17,6 +17,7 @@ app.set('view engine', 'pug')
 app.set('views', './views')
 
 app.use(express.static('public'))
+app.use(express.urlencoded({extended: true}))
 
 const port = process.env.PORT || 3000
 

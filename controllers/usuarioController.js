@@ -10,8 +10,7 @@ const form_register = (req, res) => {
     })
 }
 const register = (req, res) => {
-    console.log("Registrando....")
-        
+   res.json(req.body)     
 }
 const forgotPassword = (req, res) => {
     res.render('auth/forgot-password', {
