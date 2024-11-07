@@ -9,10 +9,17 @@ const register = (req, res) => {
         
     })
 }
+const forgotPassword = (req, res) => {
+    res.render('auth/forgot-password', {
+        pagina: "Recupera tu acceso en Bienes Raices"
+        
+    })
+}
 
 
 
 export {
     login, 
-    register
+    register,
+    forgotPassword
 }
