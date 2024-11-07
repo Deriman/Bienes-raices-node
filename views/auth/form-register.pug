@@ -14,10 +14,10 @@ block contenido
             form(class="space-y-5" method="POST" action="/auth/register" noValidate)
                 div 
                     label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="name") Tu nombre
-                    input(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Tu nombre" type="text" name="name" #name)
+                    input(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Tu nombre" type="text" name="name" #name value= user ? user.name : '')
                 div 
                     label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="email") Tu email de registro
-                    input(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Tu email" type="email" name="email" #email)
+                    input(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Tu email" type="email" name="email" #email value= user ? user.email : '' )
                 div 
                     label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="password") Tu password
                     input(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Tu password" type="password" name="password" #password)

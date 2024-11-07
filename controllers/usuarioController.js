@@ -1,5 +1,6 @@
 import { check, validationResult } from 'express-validator'
 import User from '../models/User.js'
+import { escape } from 'mysql2'
 
 const form_login = (req, res) => {
     res.render('auth/form-login', {
@@ -20,15 +21,32 @@ const register = async (req, res) => {
         .isEmail().withMessage('Email no válido').run(req)
     await check('password')
         .isLength({ min: 6}).withMessage('El password debe contener al menos 6 caracteres').run(req)
-    await check('repetir-password')
-        .equals('password').withMessage('Los passwords deben ser iguales').run(req)
+    await check('repetir_password')
+        .equals(req.body.password).withMessage('Los passwords deben ser iguales').run(req)
 
     let validation = validationResult(req)
+    const { name, email, password } = req.body
 
     if (!validation.isEmpty()){
         return res.render('auth/form-register', {
             pagina: "Crear Cuenta",
-            errors: validation.array()
+            errors: validation.array(),
+            user: {
+                name,
+                email
+            }
+        })
+    }
+
+    const existUser = await User.findOne( { where: {email} })
+    if (existUser) {
+        return res.render('auth/form-register', {
+            pagina: "Crear Cuenta",
+            errors: [{ msg: 'El email ya esta registrado'}],
+            user: {
+                name,
+                email
+            }
         })
     }
     const user = await User.create(req.body)
