@@ -71,7 +71,7 @@ const register = async (req, res) => {
     })
 }
 const confirmCount = async (req, res) => {
-    const token= req.params.token
+    const token = req.params.token
     const user = await User.findOne({where:{token}})
     if (!user) {
         return res.render('auth/confirm-count', {
@@ -80,6 +80,15 @@ const confirmCount = async (req, res) => {
             error: true
         })
     }
+
+    user.token = ""
+    user.confirm = true
+    await user.save()
+    res.render('auth/confirm-count', {
+        pagina: 'Cuenta confirmada correctamente',
+        message: 'La cuenta ha sido confirmada correctamente.',
+        error: false
+    })
 }
 
 const forgotPassword = (req, res) => {
