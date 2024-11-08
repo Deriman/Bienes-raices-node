@@ -2,7 +2,6 @@ import { check, validationResult } from 'express-validator'
 import User from '../models/User.js'
 import { generateId } from '../helpers/token.js'
 import emailRegister from '../helpers/email.js'
-import { where } from 'sequelize'
 
 const form_login = (req, res) => {
     res.render('auth/form-login', {
@@ -11,7 +10,8 @@ const form_login = (req, res) => {
 }
 const form_register = (req, res) => {
     res.render('auth/form-register', {
-        pagina: "Crear Cuenta"
+        pagina: "Crear Cuenta",
+        csrf: req.csrfToken()
         
     })
 }
@@ -32,6 +32,7 @@ const register = async (req, res) => {
     if (!validation.isEmpty()){
         return res.render('auth/form-register', {
             pagina: "Crear Cuenta",
+            csrf: req.csrfToken(),
             errors: validation.array(),
             user: {
                 name,
@@ -44,6 +45,7 @@ const register = async (req, res) => {
     if (existUser) {
         return res.render('auth/form-register', {
             pagina: "Crear Cuenta",
+            csrf: req.csrfToken(),
             errors: [{ msg: 'El email ya esta registrado'}],
             user: {
                 name,

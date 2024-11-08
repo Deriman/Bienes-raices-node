@@ -1,5 +1,7 @@
 import dotenv from 'dotenv'
 import express from 'express'
+import cookieParser from 'cookie-parser'
+import csurf from 'csurf'
 import usersRoutes  from './routes/usersRoutes.js'
 import db from './config/db.js'
 
@@ -19,6 +21,8 @@ app.set('views', './views')
 
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))
+app.use(cookieParser())
+app.use(csurf({ cookie: true }))
 
 const port = process.env.PORT || 3000
 
