@@ -3,8 +3,8 @@ import express from 'express'
 import usersRoutes  from './routes/usersRoutes.js'
 import db from './config/db.js'
 
-dotenv.config()
 const app = express()
+dotenv.config()
 
 try {
     await db.authenticate();

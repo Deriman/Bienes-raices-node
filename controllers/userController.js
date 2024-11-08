@@ -2,6 +2,7 @@ import { check, validationResult } from 'express-validator'
 import User from '../models/User.js'
 import { generateId } from '../helpers/token.js'
 import emailRegister from '../helpers/email.js'
+import { where } from 'sequelize'
 
 const form_login = (req, res) => {
     res.render('auth/form-login', {
@@ -69,8 +70,16 @@ const register = async (req, res) => {
         message: 'Hemos enviado un email de confirmación, pincha en el enlace.'
     })
 }
-const confirmCount = (req, res) => {
-    console.log(req.params.token)
+const confirmCount = async (req, res) => {
+    const token= req.params.token
+    const user = await User.findOne({where:{token}})
+    if (!user) {
+        return res.render('auth/confirm-count', {
+            pagina: 'Error al confirmar tu cuenta',
+            message: 'Hubo un error al confirmar tu cuenta, intentalo de nuevo.',
+            error: true
+        })
+    }
 }
 
 const forgotPassword = (req, res) => {
