@@ -22,7 +22,7 @@ const emailRegister = async (data) => {
             <p>Hola ${name}, comprueba tu cuenta en BienesRaices.com</p>
 
             <p>Tu cuenta ya esta casi lista, solo debes confirmarla en el siguiente enlace:
-            <a href="">Confirmar cuenta</a></p>
+            <a href="${process.env.BACKEND_URI}:${process.env.PORT ?? 3000}/auth/confirm-count/${token}">Confirmar cuenta</a></p>
 
             <p>Si tu no creaste esta cuenta, puedes ignorar el mensaje</p>
         `

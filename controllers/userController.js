@@ -69,6 +69,10 @@ const register = async (req, res) => {
         message: 'Hemos enviado un email de confirmación, pincha en el enlace.'
     })
 }
+const confirmCount = (req, res) => {
+    console.log(req.params.token)
+}
+
 const forgotPassword = (req, res) => {
     res.render('auth/forgot-password', {
         pagina: "Recupera tu acceso en Bienes Raices"
@@ -80,5 +84,6 @@ export {
     form_login, 
     form_register,
     forgotPassword,
-    register
+    register,
+    confirmCount
 }
