@@ -69,8 +69,6 @@ const forgotPassword = (req, res) => {
     })
 }
 
-
-
 export {
     form_login, 
     form_register,
