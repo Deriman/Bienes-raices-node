@@ -95,9 +95,26 @@ const confirmCount = async (req, res) => {
 
 const forgotPassword = (req, res) => {
     res.render('auth/forgot-password', {
-        pagina: "Recupera tu acceso en Bienes Raices"
+        pagina: "Recupera tu acceso en Bienes Raices",
+        csrf: req.csrfToken(),
         
     })
+}
+
+const resetPassword = async (req, res) => {
+    await check('email')
+        .isEmail().withMessage('Email no válido').run(req)
+
+        let validation = validationResult(req)
+        const { email } = req.body
+    
+        if (!validation.isEmpty()){
+            return res.render('auth/forgot-password', {
+                pagina: "Recupera tu acceso en Bienes Raices",
+                csrf: req.csrfToken(),
+                errors: validation.array(),
+            })
+        }
 }
 
 export {
@@ -105,5 +122,6 @@ export {
     form_register,
     forgotPassword,
     register,
-    confirmCount
+    confirmCount,
+    resetPassword
 }
