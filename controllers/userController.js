@@ -149,11 +149,17 @@ const checkToken = async (req, res) => {
             error: true
         })
     }
-    res.send({a:1})
+
+    res.render('auth/reset-password',{
+        pagina: 'Restablece tu password',
+        csrf: req.csrfToken()
+    })
 }
 
 
 const newPassword = (req, res) => {
+
+    console.log("Guardando....")
 }
 
 export {
