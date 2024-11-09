@@ -1,7 +1,7 @@
 import { check, validationResult } from 'express-validator'
 import User from '../models/User.js'
 import { generateId } from '../helpers/token.js'
-import emailRegister from '../helpers/email.js'
+import {emailRegister, emailForgotPassword} from '../helpers/email.js'
 
 const form_login = (req, res) => {
     res.render('auth/form-login', {
@@ -69,7 +69,7 @@ const register = async (req, res) => {
 
     res.render('templates/message',{
         pagina: 'Cuenta creada correctamente',
-        message: 'Hemos enviado un email de confirmación, pincha en el enlace.'
+        message: 'Hemos enviado un email de confirmación.'
     })
 }
 const confirmCount = async (req, res) => {
@@ -92,7 +92,6 @@ const confirmCount = async (req, res) => {
         error: false
     })
 }
-
 const forgotPassword = (req, res) => {
     res.render('auth/forgot-password', {
         pagina: "Recupera tu acceso en Bienes Raices",
@@ -124,6 +123,27 @@ const resetPassword = async (req, res) => {
             errors: [{ msg: "El email no pertenece a ningún usuario registrado"}],
         })
     }
+
+    user.token = generateId()
+    user.save()
+
+    emailForgotPassword({
+        email, 
+        name: user.name,
+        token: user.token
+    })
+
+    res.render('templates/message',{
+        pagina: 'Restablece tu password',
+        message: 'Hemos enviado un email con las instrucciones.'
+    })
+}
+
+const checkToken = (req, res) => {
+}
+
+
+const newPassword = (req, res) => {
 }
 
 export {
@@ -132,5 +152,7 @@ export {
     forgotPassword,
     register,
     confirmCount,
-    resetPassword
+    resetPassword,
+    checkToken,
+    newPassword
 }
