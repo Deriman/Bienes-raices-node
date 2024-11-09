@@ -3,6 +3,7 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import csurf from 'csurf'
 import usersRoutes  from './routes/usersRoutes.js'
+import propertiesRoutes from './routes/propertiesRoutes.js'
 import db from './config/db.js'
 
 const app = express()
@@ -27,6 +28,7 @@ app.use(csurf({ cookie: true }))
 const port = process.env.PORT || 3000
 
 app.use('/auth', usersRoutes )
+app.use('/', propertiesRoutes)
 
 app.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`)
