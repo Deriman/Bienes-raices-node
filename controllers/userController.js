@@ -1,4 +1,5 @@
 import { check, validationResult } from 'express-validator'
+import bcrypt from 'bcrypt'
 import User from '../models/User.js'
 import { generateId } from '../helpers/token.js'
 import {emailRegister, emailForgotPassword} from '../helpers/email.js'
@@ -83,15 +84,16 @@ const confirmCount = async (req, res) => {
         })
     }
 
-    user.token = ""
+    user.token = null
     user.confirm = true
     await user.save()
+
     res.render('auth/confirm-count', {
         pagina: 'Cuenta confirmada correctamente',
-        message: 'La cuenta ha sido confirmada correctamente.',
-        error: false
+        message: 'La cuenta ha sido confirmada correctamente.'
     })
 }
+
 const forgotPassword = (req, res) => {
     res.render('auth/forgot-password', {
         pagina: "Recupera tu acceso en Bienes Raices",
@@ -111,7 +113,7 @@ const resetPassword = async (req, res) => {
         return res.render('auth/forgot-password', {
             pagina: "Recupera tu acceso en Bienes Raices",
             csrf: req.csrfToken(),
-            errors: validation.array(),
+            errors: validation.array()
         })
     }
 
@@ -157,9 +159,32 @@ const checkToken = async (req, res) => {
 }
 
 
-const newPassword = (req, res) => {
+const newPassword = async (req, res) => {
+    await check('password')
+        .isLength({ min: 6}).withMessage('El password debe contener al menos 6 caracteres').run(req)
 
-    console.log("Guardando....")
+    let validation = validationResult(req)
+    
+    if (!validation.isEmpty()){
+        return res.render('auth/reset-password', {
+            pagina: 'Restablece tu password',
+            csrf: req.csrfToken(),
+            errors: validation.array(),
+            })
+    }
+    const { token } = req.params
+    const { password } = req.body
+    const user = await User.findOne( { where: { token }})
+    const salt = await bcrypt.genSalt(10)
+    user.password = await bcrypt.hash(password, salt)
+    user.token = ''
+    await user.save()
+
+    res.render('auth/confirm-count', {
+        pagina: 'Password restablecido.',
+        message: 'Se ha restablecido la password con exito.',
+        error: false
+    })
 }
 
 export {
