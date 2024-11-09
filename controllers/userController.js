@@ -105,16 +105,25 @@ const resetPassword = async (req, res) => {
     await check('email')
         .isEmail().withMessage('Email no válido').run(req)
 
-        let validation = validationResult(req)
-        const { email } = req.body
+    let validation = validationResult(req)
+    const { email } = req.body
     
-        if (!validation.isEmpty()){
-            return res.render('auth/forgot-password', {
-                pagina: "Recupera tu acceso en Bienes Raices",
-                csrf: req.csrfToken(),
-                errors: validation.array(),
-            })
-        }
+    if (!validation.isEmpty()){
+        return res.render('auth/forgot-password', {
+            pagina: "Recupera tu acceso en Bienes Raices",
+            csrf: req.csrfToken(),
+            errors: validation.array(),
+        })
+    }
+
+    const user = await User.findOne( { where: { email }})
+    if (!user){
+        return res.render('auth/forgot-password', {
+            pagina: "Recupera tu acceso en Bienes Raices",
+            csrf: req.csrfToken(),
+            errors: [{ msg: "El email no pertenece a ningún usuario registrado"}],
+        })
+    }
 }
 
 export {
