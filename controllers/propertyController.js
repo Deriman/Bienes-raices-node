@@ -1,7 +1,8 @@
 
 const adminPanel = (req, res) => {
     res.render('properties/admin-panel', {
-        pagina: 'Mis propiedades'
+        pagina: 'Mis propiedades',
+        header: true
     })
 }
 
