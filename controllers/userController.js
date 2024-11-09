@@ -6,8 +6,57 @@ import {emailRegister, emailForgotPassword} from '../helpers/email.js'
 
 const form_login = (req, res) => {
     res.render('auth/form-login', {
-         pagina: "Iniciar sesión"
+         pagina: "Iniciar sesión",
+         csrf: req.csrfToken()
     })
+}
+
+const authenticate = async (req, res) => {
+    await check('email')
+        .isEmail().withMessage('Email no válido').run(req)
+    await check('password')
+        .notEmpty().withMessage('El password es requerido').run(req)
+
+    let validation = validationResult(req)
+    const { email, password } = req.body
+    
+    if (!validation.isEmpty()){
+        return res.render('auth/form-login', {
+            pagina: "Iniciar sesión",
+            csrf: req.csrfToken(),
+            errors: validation.array(),
+            
+        })
+    }
+
+    const user = await User.findOne({ where: {email}})
+    if (!user) {
+        return res.render('auth/form-login', {
+            pagina: "Iniciar sesión",
+            csrf: req.csrfToken(),
+            errors: [{ msg: 'El email no está registrado en BienesRaices.com'}],
+        })
+    }
+
+    if (!user.confirm) {
+        return res.render('auth/form-login', {
+            pagina: "Iniciar sesión",
+            csrf: req.csrfToken(),
+            errors: [{ msg: 'Tu cuenta en BienesRaices.com no ha sido confirmada'}],
+        })
+    }
+
+    const passwordDB = user.password
+    if (!user.verificatePassword(passwordDB)) {
+        return res.render('auth/form-login', {
+            pagina: "Iniciar sesión",
+            csrf: req.csrfToken(),
+            errors: [{ msg: 'La password no es correcta'}],
+            user: {
+                email
+            }
+        })
+    }
 }
 const form_register = (req, res) => {
     res.render('auth/form-register', {
@@ -195,5 +244,6 @@ export {
     confirmCount,
     resetPassword,
     checkToken,
-    newPassword
+    newPassword, 
+    authenticate
 }
