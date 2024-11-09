@@ -1,5 +1,6 @@
 import { check, validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
 import { generateId } from '../helpers/token.js'
 import {emailRegister, emailForgotPassword} from '../helpers/email.js'
@@ -46,8 +47,7 @@ const authenticate = async (req, res) => {
         })
     }
 
-    const passwordDB = user.password
-    if (!user.verificatePassword(passwordDB)) {
+    if (!user.verificatePassword(password)) {
         return res.render('auth/form-login', {
             pagina: "Iniciar sesión",
             csrf: req.csrfToken(),
@@ -57,6 +57,16 @@ const authenticate = async (req, res) => {
             }
         })
     }
+
+    const jwToken = jwt.sign({
+        name: 'Deriman',
+        equipo: 'CaiGC',
+        prueba: 3000
+    }, "palabrasupersecretaaaa", {
+        expiresIn: '1d'
+    })
+
+    console.log({jwToken})
 }
 const form_register = (req, res) => {
     res.render('auth/form-register', {
