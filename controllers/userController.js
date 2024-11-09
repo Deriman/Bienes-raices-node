@@ -1,8 +1,7 @@
 import { check, validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
-import { generateId } from '../helpers/token.js'
+import { generateId, jwTokenGenerate } from '../helpers/token.js'
 import {emailRegister, emailForgotPassword} from '../helpers/email.js'
 
 const form_login = (req, res) => {
@@ -58,15 +57,12 @@ const authenticate = async (req, res) => {
         })
     }
 
-    const jwToken = jwt.sign({
-        name: 'Deriman',
-        equipo: 'CaiGC',
-        prueba: 3000
-    }, "palabrasupersecretaaaa", {
-        expiresIn: '1d'
-    })
-
-    console.log({jwToken})
+    const jwToken = jwTokenGenerate({id:user.id, name:user.name})
+    return res.cookie('token', jwToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: true
+    }).redirect('/my-properties')
 }
 const form_register = (req, res) => {
     res.render('auth/form-register', {
