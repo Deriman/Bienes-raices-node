@@ -139,7 +139,17 @@ const resetPassword = async (req, res) => {
     })
 }
 
-const checkToken = (req, res) => {
+const checkToken = async (req, res) => {
+    const { token } = req.params
+    const user = await User.findOne({ where: {token}})
+    if (!user) {
+        return res.render('auth/confirm-count', {
+            pagina: 'Error al restablecer tu password',
+            message: 'Hubo un error al confirmar tu información, intentalo de nuevo.',
+            error: true
+        })
+    }
+    res.send({a:1})
 }
 
 
