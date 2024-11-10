@@ -1,0 +1,16 @@
+extends ../layout/index
+
+block contenido
+    div(class="py-10")
+        h1(class="text-4xl my-10 font-extrabold text-center") Bienes
+            span(class="font-normal") Raices
+    h2(class="text-center text-2xl font-extrabold")=pagina
+
+    div(class="bg-white shadow py-8 px-4 rounded mx-auto max-w-4xl my-10 md:px-10")
+        form(class="spce-y-8")
+            div(class="space-y-5")
+                h3(class="text-lg leading-6 font-medium text-gray-900") Información general
+                p(class="text-gray-600") Añade información sobre la propiedad en venta.
+                div 
+                    label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="titulo") Título del anuncio
+                    input(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Título de la propiedad, ej. Casa en la playa." type="text" name="titulo" #titulo)

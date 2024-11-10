@@ -71,6 +71,7 @@ const form_register = (req, res) => {
         
     })
 }
+// Botón de crear cuenta
 const register = async (req, res) => {
 
     await check('name')
@@ -232,7 +233,7 @@ const newPassword = async (req, res) => {
     const user = await User.findOne( { where: { token }})
     const salt = await bcrypt.genSalt(10)
     user.password = await bcrypt.hash(password, salt)
-    user.token = ''
+    user.token = null
     await user.save()
 
     res.render('auth/confirm-count', {

@@ -6,7 +6,16 @@ const adminPanel = (req, res) => {
     })
 }
 
+const create = (req, res) => {
+    res.render('properties/create', {
+        pagina: 'Crear una propiedad',
+        header: true
+    })
+}
+
+
 
 export {
-    adminPanel
+    adminPanel,
+    create
 }
