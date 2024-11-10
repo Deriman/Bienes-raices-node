@@ -1,17 +1,19 @@
 const categories = [
     {
-        nombre: 'Piso'
+        name: 'Piso'
     },
     {
-        nombre: 'Casa'
+        name: 'Casa'
     },
     {
-        nombre: 'Chalet'
+        name: 'Chalet'
     },
     {
-        nombre: 'Terreno'
+        name: 'Terreno'
     },
     {
-        nombre: 'Local'
+        name: 'Local'
     }
 ]
+
+export default categories

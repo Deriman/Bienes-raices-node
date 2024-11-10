@@ -1,5 +1,5 @@
 import { exit } from 'node:process'
-import categories from './categories'
+import categories from './categories.js'
 import Category from '../models/Category.js'
 import db from '../config/db.js'
 
@@ -19,4 +19,8 @@ const importData = async () => {
         exit(1)
     }
 
+}
+// ["node, ./seed/seeder.js, -i"]
+if (process.argv[2] === '-i') {
+    importData()
 }

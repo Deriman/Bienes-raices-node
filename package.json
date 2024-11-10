@@ -8,7 +8,8 @@
     "server": "nodemon index.js",
     "css": "tailwindcss -i ./public/css/tailwind.css -o ./public/css/app.css --watch",
     "js": "webpack --watch",
-    "dev": "concurrently \"npm run css\" \"npm run js\""
+    "dev": "concurrently \"npm run css\" \"npm run js\"",
+    "db:import": "node ./seed/seeder.js -i"
   },
   "keywords": [],
   "author": "",
