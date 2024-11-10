@@ -1,3 +1,6 @@
+import Category from '../models/Category.js'
+import Price from '../models/Price.js'
+
 
 const adminPanel = (req, res) => {
     res.render('properties/admin-panel', {
@@ -6,10 +9,17 @@ const adminPanel = (req, res) => {
     })
 }
 
-const create = (req, res) => {
+const create = async (req, res) => {
+
+    const [categories, prices] = await Promise.all([
+        Category.findAll(),
+        Price.findAll()
+    ])
     res.render('properties/create', {
         pagina: 'Crear una propiedad',
-        header: true
+        header: true,
+        categories,
+        prices
     })
 }
 
