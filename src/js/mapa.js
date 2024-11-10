@@ -26,6 +26,10 @@
         // Obtener la información de las calles al soltar el pin
         geocodeService.reverse().latlng(position, 16).run(function(error, result){
             marker.bindPopup(result.address.LongLabel)
+            document.querySelector('.calle').textContent = result?.address?.Address ?? ''
+            document.querySelector('#calle').value = result?.address?.Address ?? ''
+            document.querySelector('#lat').value = result?.latlng?.lat ?? ''
+            document.querySelector('#lng').value = result?.latlng?.lng ?? ''
         })
     })
 

@@ -15,7 +15,7 @@ block contenido
                 h3(class="text-lg leading-6 font-medium text-gray-900") Información general
                 p(class="text-gray-600") Añade información sobre la propiedad en venta.
                 div 
-                    label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="titulo") Título del anuncio
+                    label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="titulo") Ubicación
                     input(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Título de la propiedad, ej. Casa en la playa." type="text" name="titulo" #titulo)
                 div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
                     div(class="md:w-1/2") 
@@ -48,7 +48,15 @@ block contenido
                             - var n = 1;
                                 while n < 6
                                     option(value = n) #{n++}
+                div(class="space-y-5 border-gray-200 border-t py-5")
+                    h3(class="text-lg leading-6 font-medium text-gray-900") Ubicación.
+                    p(class="text-gray-600") Ubica la propiedad en el mapa.
                 div(id="mapa" class="h-96")
+                div
+                    p(class="calle")
+                input(type="hidden" name="calle" id="calle")
+                input(type="hidden" name="lat" id="lat")
+                input(type="hidden" name="lng" id="lng")
 block scripts 
     script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
     script(src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js")
