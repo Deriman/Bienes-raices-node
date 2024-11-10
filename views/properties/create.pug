@@ -15,8 +15,11 @@ block contenido
                 h3(class="text-lg leading-6 font-medium text-gray-900") Información general
                 p(class="text-gray-600") Añade información sobre la propiedad en venta.
                 div 
-                    label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="titulo") Ubicación
+                    label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="titulo") Título del anuncio
                     input(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Título de la propiedad, ej. Casa en la playa." type="text" name="titulo" #titulo)
+                div 
+                    label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="descripcion") Descripción
+                    textarea(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Descripción de la propiedad." type="text" name="descripcion" #descripcion)
                 div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
                     div(class="md:w-1/2") 
                         label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="categoria") Categoria
