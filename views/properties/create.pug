@@ -1,8 +1,8 @@
 extends ../layout/index
 
 block contenido
-    div(class="py-10")
-        h1(class="text-4xl my-10 font-extrabold text-center") Bienes
+    div(class="py-2")
+        h1(class="text-4xl my-6 font-extrabold text-center") Bienes
             span(class="font-normal") Raices
     h2(class="text-center text-2xl font-extrabold")=pagina
 
@@ -14,3 +14,12 @@ block contenido
                 div 
                     label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="titulo") Título del anuncio
                     input(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Título de la propiedad, ej. Casa en la playa." type="text" name="titulo" #titulo)
+                div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
+                    div(class="md:w-1/2") 
+                        label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="categoria") Categoria
+                        select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="titulo" #titulo)
+                            option(value="") - Seleccione -
+                    div(class="md:w-1/2") 
+                        label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="precio") Precio
+                        select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="precio" #precio)
+                            option(value="") - Seleccione -
