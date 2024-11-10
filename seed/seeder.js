@@ -29,8 +29,28 @@ const importData = async () => {
     }
 
 }
+
+const deleteData = async () => {
+    try {
+        // await Promise.all([
+        //     Category.destroy({ where: {}, truncate: true }),
+        //     Price.destroy({ where: {}, truncate: true })
+        // ])
+        await db.sync({force: true})
+        console.log('Datos borrados correctamente')
+        // Finaliza sin error
+        exit()
+    } catch (error) {
+        console.log(error)
+        exit(1)
+    }
+}   
+
 // Genera la importación mediante un script que lo ejecuta
 // ["node, ./seed/seeder.js, -i"]
 if (process.argv[2] === '-i') {
     importData()
+}
+if (process.argv[2] === '-d') {
+    deleteData()
 }
