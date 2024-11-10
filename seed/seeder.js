@@ -1,6 +1,8 @@
 import { exit } from 'node:process'
 import categories from './categories.js'
+import prices from './prices.js'
 import Category from '../models/Category.js'
+import Price from '../models/Price.js'
 import db from '../config/db.js'
 
 const importData = async () => {
@@ -10,7 +12,14 @@ const importData = async () => {
         // Creamos las columnas
         await db.sync()
         // Insertamos los datos; bulkCreate inserta varios datos a la vez
-        await Category.bulkCreate(categories)
+        //Doble procede sin ambos son dependintes, es decir que el segundo await necesita los datos del 1º
+        // await Category.bulkCreate(categories)
+        // await Price.bulkCreate(prices)
+        // Se hace la inserción de forma paralela
+        await Promise.all([
+            Category.bulkCreate(categories),
+            Price.bulkCreate(prices)
+        ])
         console.log('Datos importados correctamente')
         // Finaliza sin error
         exit()
@@ -20,6 +29,7 @@ const importData = async () => {
     }
 
 }
+// Genera la importación mediante un script que lo ejecuta
 // ["node, ./seed/seeder.js, -i"]
 if (process.argv[2] === '-i') {
     importData()
