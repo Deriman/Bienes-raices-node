@@ -1,4 +1,5 @@
-import {Price} from '../models/index.js'
+import { validationResult } from 'express-validator'
+import { Price, Category } from '../models/index.js'
 
 const adminPanel = (req, res) => {
     res.render('properties/admin-panel', {
@@ -16,14 +17,37 @@ const create = async (req, res) => {
     res.render('properties/create', {
         pagina: 'Crear una propiedad',
         header: true,
+        csrf: req.csrfToken(),
         categories,
         prices
     })
+}
+
+const save = async (req, res) => {
+
+    let validation = validationResult(req)
+
+    if (!validation.isEmpty()){
+        const [categories, prices] = await Promise.all([
+            Category.findAll(),
+            Price.findAll()
+        ])
+        return res.render('properties/create', {
+            pagina: "Crear una propiedad",
+            header: true,
+            csrf: req.csrfToken(),
+            categories,
+            prices,
+            errors: validation.array()
+        })
+    }
+
 }
 
 
 
 export {
     adminPanel,
-    create
+    create, 
+    save
 }
