@@ -1,6 +1,4 @@
-import Category from '../models/Category.js'
-import Price from '../models/Price.js'
-
+import {Price} from '../models/index.js'
 
 const adminPanel = (req, res) => {
     res.render('properties/admin-panel', {
