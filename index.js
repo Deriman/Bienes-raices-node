@@ -11,6 +11,7 @@ const app = express()
 // Conexión BD mysql
 try {
     await db.authenticate();
+    console.log("Conexión")
     db.sync();
 } catch (error) {
     console.log(error)
