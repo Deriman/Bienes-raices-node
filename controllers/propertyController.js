@@ -19,7 +19,8 @@ const create = async (req, res) => {
         header: true,
         csrf: req.csrfToken(),
         categories,
-        prices
+        prices,
+        datos: {}
     })
 }
 
@@ -38,7 +39,8 @@ const save = async (req, res) => {
             csrf: req.csrfToken(),
             categories,
             prices,
-            errors: validation.array()
+            errors: validation.array(),
+            datos: req.body
         })
     }
 

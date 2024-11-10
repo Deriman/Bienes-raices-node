@@ -20,45 +20,45 @@ block contenido
                 p(class="text-gray-600") Añade información sobre la propiedad en venta.
                 div 
                     label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="titulo") Título del anuncio
-                    input(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Título de la propiedad, ej. Casa en la playa." type="text" name="titulo" #titulo)
+                    input(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Título de la propiedad, ej. Casa en la playa." type="text" name="titulo" #titulo value = datos.titulo ? datos.titulo : "")
                 div 
                     label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="descripcion") Descripción
-                    textarea(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Descripción de la propiedad." name="descripcion" #descripcion)
+                    textarea(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Descripción de la propiedad." name="descripcion" #descripcion)= datos.descripcion ? datos.descripcion : ""
                 div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
                     div(class="md:w-1/2") 
                         label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="categoria") Categoria
                         select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="categoria" #categoria)
                             option(value="") - Seleccione -
                             each category in categories 
-                                option(value=category.id)= category.name 
+                                option(value=category.id selected= datos.categoria ? datos.categoria == category.id ? true : false : null)= category.name 
                     div(class="md:w-1/2") 
                         label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="precio") Precio
                         select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="precio" #precio)
                             option(value="") - Seleccione -
                             each price in prices    
-                                option(value=price.id)= price.name 
+                                option(value=price.id selected= datos.precio ? datos.precio == price.id ? true : false : null)= price.name 
                 div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
                     div(class="md:w-1/3") 
-                        label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="Habitaciones") Habitaciones
-                        select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="Habitaciones" #Habitaciones)
+                        label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="habitaciones") Habitaciones
+                        select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="habitaciones" #habitaciones)
                             option(value="") - Seleccione -
                             - var n = 1;
                                 while n < 10
-                                    option(value = n) #{n++}
+                                    option(value = n selected= datos.habitaciones ? datos.habitaciones == n ? true : false : null) #{n++}
                     div(class="md:w-1/3") 
-                        label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="Estacionamientos") Estacionamientos
-                        select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="Estacionamientos" #Estacionamientos)
+                        label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="estacionamientos") Estacionamientos
+                        select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="estacionamientos" #estacionamientos)
                             option(value="") - Seleccione 
                             - var n = 1;
                                 while n < 5
-                                    option(value = n) #{n++}
+                                    option(value = n selected= datos.estacionamientos ? datos.estacionamientos == n ? true : false : null) #{n++}
                     div(class="md:w-1/3") 
-                        label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="WC") WC
-                        select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="WC" #WC)
+                        label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="wc") WC
+                        select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="wc" #wc)
                             option(value="") - Seleccione -
                             - var n = 1;
                                 while n < 6
-                                    option(value = n) #{n++}
+                                    option(value = n selected= datos.wc ? datos.wc == n ? true : false : null) #{n++}
                 div(class="space-y-5 border-gray-200 border-t py-5")
                     h3(class="text-lg leading-6 font-medium text-gray-900") Ubicación.
                     p(class="text-gray-600") Ubica la propiedad en el mapa.

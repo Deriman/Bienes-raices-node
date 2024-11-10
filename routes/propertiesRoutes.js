@@ -15,7 +15,6 @@ router.post('/my-properties/create',
     body('habitaciones').isNumeric().withMessage('Selecciona las habitaciones que tiene la propiedad.'),
     body('precio').isNumeric().withMessage('Selecciona un rango de precios para la propiedad'),
     body('estacionamientos').isNumeric().withMessage('Selecciona los estacionamientos que tiene la propiedad.'),
-    body('estacionamientos').isNumeric().withMessage('Selecciona una categoria.'),
     body('lat').notEmpty().withMessage('Ubica la propiedad en el mapa.'),
     save
 )
