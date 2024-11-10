@@ -23,3 +23,25 @@ block contenido
                         label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="precio") Precio
                         select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="precio" #precio)
                             option(value="") - Seleccione -
+                div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
+                    div(class="md:w-1/3") 
+                        label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="Habitaciones") Habitaciones
+                        select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="Habitaciones" #Habitaciones)
+                            option(value="") - Seleccione -
+                            - var n = 1;
+                                while n < 10
+                                    option(value = n) #{n++}
+                    div(class="md:w-1/3") 
+                        label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="Estacionamientos") Estacionamientos
+                        select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="Estacionamientos" #Estacionamientos)
+                            option(value="") - Seleccione 
+                            - var n = 1;
+                                while n < 5
+                                    option(value = n) #{n++}
+                    div(class="md:w-1/3") 
+                        label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="WC") WC
+                        select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="WC" #WC)
+                            option(value="") - Seleccione -
+                            - var n = 1;
+                                while n < 6
+                                    option(value = n) #{n++}
