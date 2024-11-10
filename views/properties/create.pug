@@ -1,5 +1,8 @@
 extends ../layout/index
 
+block styles 
+    link(rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css")
+
 block contenido
     div(class="py-2")
         h1(class="text-4xl my-6 font-extrabold text-center") Bienes
@@ -45,6 +48,7 @@ block contenido
                             - var n = 1;
                                 while n < 6
                                     option(value = n) #{n++}
+                div(id="mapa" class="h-96")
 block scripts 
     script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
     script(src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js")
