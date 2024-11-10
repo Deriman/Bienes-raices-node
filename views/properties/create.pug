@@ -64,10 +64,10 @@ block contenido
                     p(class="text-gray-600") Ubica la propiedad en el mapa.
                     div(id="mapa" class="h-96")
                     div
-                        p(class="calle")
-                    input(type="hidden" name="calle" id="calle")
-                    input(type="hidden" name="lat" id="lat")
-                    input(type="hidden" name="lng" id="lng")
+                        p(class="calle")= datos.calle ? datos.calle : ''
+                    input(type="hidden" name="calle" id="calle" value=datos.calle ? datos.calle : '' )
+                    input(type="hidden" name="lat" id="lat" value=datos.lat ? datos.lat : '')
+                    input(type="hidden" name="lng" id="lng" value=datos.lng ? datos.lng : '')
                 input(class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold uppercase cursor-pointer" type="submit" value="Añadir imagen")
 block scripts 
     script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
