@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator'
-import { Price, Category, Property } from '../models/index.js'
+import { Price, Category, Property } from '../models/index.js' //Modelos con las asociaciones
 
 const adminPanel = (req, res) => {
     res.render('properties/admin-panel', {
@@ -46,7 +46,7 @@ const save = async (req, res) => {
 
     // Añadir la propiedad a BD
     console.log(req.body)
-    const { title, description, habitaciones, estacionamientos, wc, calle, lat, lng, price:price_id, category:category_id } = req.body
+    const { titulo:title, descripcion:description, habitaciones, estacionamientos, wc, calle, lat, lng, precio:price_id, categoria:category_id } = req.body
     try {
         const propertySaved = Property.create({
             title,
