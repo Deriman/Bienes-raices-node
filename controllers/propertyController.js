@@ -45,8 +45,8 @@ const save = async (req, res) => {
     }
 
     // Añadir la propiedad a BD
-    console.log(req.body)
     const { titulo:title, descripcion:description, habitaciones, estacionamientos, wc, calle, lat, lng, precio:price_id, categoria:category_id } = req.body
+    const { id: user_id }= req.user
     try {
         const propertySaved = Property.create({
             title,
@@ -58,11 +58,16 @@ const save = async (req, res) => {
             lat,
             lng, 
             price_id,
-            category_id
+            category_id,
+            user_id,
+            images: ''
         })
     } catch (error) {
         console.log(error)
     }
+
+    const { id } = propertySaved
+    res.redirect(`/properties/add-image/:${id}`)
 
 }
 

@@ -13,7 +13,7 @@ const routesProtected = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         const user = await User.scope('deletePassword').findByPk(decoded.id)
         if (user) {
-            res.user = user
+            req.user = user
         } else {
             return res.redirect('/auth/form-login')
         }

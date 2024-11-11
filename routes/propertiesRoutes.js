@@ -6,8 +6,9 @@ import { body } from 'express-validator'
 const router = express.Router()
 
 router.get('/my-properties', routesProtected, adminPanel)
-router.get('/my-properties/create', create)
+router.get('/my-properties/create', routesProtected, create)
 router.post('/my-properties/create', 
+    routesProtected,
     body('titulo').notEmpty().withMessage('El campo titulo no puede ir vacío.'),
     body('descripcion')
         .notEmpty().withMessage('El campo descripcion no puede ir vacío.')
