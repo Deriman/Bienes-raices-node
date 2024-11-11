@@ -1,10 +1,11 @@
 import express  from "express";
 import { adminPanel, create, save } from "../controllers/propertyController.js";
+import routesProtected from "../middleware/routesProtected.js";
 import { body } from 'express-validator'
 
 const router = express.Router()
 
-router.get('/my-properties', adminPanel)
+router.get('/my-properties', routesProtected, adminPanel)
 router.get('/my-properties/create', create)
 router.post('/my-properties/create', 
     body('titulo').notEmpty().withMessage('El campo titulo no puede ir vacío.'),
