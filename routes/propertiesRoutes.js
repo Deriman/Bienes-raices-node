@@ -1,5 +1,5 @@
 import express  from "express";
-import { adminPanel, create, save } from "../controllers/propertyController.js";
+import { addImage, adminPanel, create, save } from "../controllers/propertyController.js";
 import routesProtected from "../middleware/routesProtected.js";
 import { body } from 'express-validator'
 
@@ -20,5 +20,6 @@ router.post('/my-properties/create',
     body('lat').notEmpty().withMessage('Ubica la propiedad en el mapa.'),
     save
 )
+router.get('/my-properties/add-image/:id', addImage)
 
 export default router

@@ -4,7 +4,6 @@ import { Price, Category, Property } from '../models/index.js' //Modelos con las
 const adminPanel = (req, res) => {
     res.render('properties/admin-panel', {
         pagina: 'Mis propiedades',
-        header: true
     })
 }
 
@@ -16,7 +15,6 @@ const create = async (req, res) => {
     ])
     res.render('properties/create', {
         pagina: 'Crear una propiedad',
-        header: true,
         csrf: req.csrfToken(),
         categories,
         prices,
@@ -35,7 +33,6 @@ const save = async (req, res) => {
         ])
         return res.render('properties/create', {
             pagina: "Crear una propiedad",
-            header: true,
             csrf: req.csrfToken(),
             categories,
             prices,
@@ -67,8 +64,14 @@ const save = async (req, res) => {
     }
 
     const { id } = propertySaved
-    res.redirect(`/properties/add-image/:${id}`)
+    res.redirect(`/my-properties/add-image/${id}`)
+}
 
+const addImage = async (req, res) => {
+
+    res.render('properties/add-image', {
+        pagina: 'Agregar imagen'
+    })
 }
 
 
@@ -76,5 +79,6 @@ const save = async (req, res) => {
 export {
     adminPanel,
     create, 
-    save
+    save, 
+    addImage
 }
