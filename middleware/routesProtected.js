@@ -4,22 +4,23 @@ import { User } from '../models/index.js'
 const routesProtected = async (req, res, next) => {
     
     // Verificar si hay token
-    const { _token } = req.cookies
-    if (!_token) {
+    const { token } = req.cookies
+    if (!token) {
         return res.redirect('/auth/form-login')
     }
-
     // Comprobar el token
     try {
-        const decoded = jwt.verify(_token, process.env.process.env.JWT_SECRET)
-        const user = await User.findByPk(decoded.id)
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        const user = await User.scope('deletePassword').findByPk(decoded.id)
+        if (user) {
+            res.user = user
+        } else {
+            return res.redirect('/auth/form-login')
+        }
+        return next()
     } catch (error) {
-        return res.clearCookie('_token').redirect('/auth/form.login')
+        return res.clearCookie('token').redirect('/auth/form-login')
     }
-
-
-
-    next()
 }
 
 export default routesProtected
