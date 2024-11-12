@@ -70,6 +70,17 @@ const save = async (req, res) => {
 
 const addImage = async (req, res) => {
 
+    const { id } = req.params
+    // Validar que la propiedad exista por id
+    const property = Property.findByPk( id )
+    if (!property) {
+        return res.redirect('/my-properties')
+    }
+    // Validar que la propiedad este publicada
+    if (property.publicado) {
+        return res.redirect('/my-properties')
+    }
+
     res.render('properties/add-image', {
         pagina: 'Agregar imagen'
     })
