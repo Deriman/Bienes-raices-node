@@ -21,6 +21,6 @@ router.post('/my-properties/create',
     body('lat').notEmpty().withMessage('Ubica la propiedad en el mapa.'),
     save
 )
-router.get('/my-properties/add-image/:id', addImage)
+router.get('/my-properties/add-image/:id', routesProtected, addImage)
 
 export default router

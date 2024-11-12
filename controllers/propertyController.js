@@ -80,6 +80,10 @@ const addImage = async (req, res) => {
     if (property.publicado) {
         return res.redirect('/my-properties')
     }
+    // Validar que el usuario que va añadir una imagen es el usuario quien creo la propiedad
+    if (req.user.id.toString() !== property.user_id.toString()) {
+        return res.redirect('/my-properties')
+    }
 
     res.render('properties/add-image', {
         pagina: 'Agregar imagen'
