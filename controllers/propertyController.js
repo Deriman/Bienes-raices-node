@@ -92,11 +92,41 @@ const addImage = async (req, res) => {
     })
 }
 
+const storageImage = async (req, res) => {
+    const { id } = req.params
+    // Validar que la propiedad exista por id
+    const property = await Property.findByPk( id )
+    if (!property) {
+        return res.redirect('/my-properties')
+    }
+    // Validar que la propiedad este publicada
+    if (property.publicado) {
+        return res.redirect('/my-properties')
+    }
+    // Validar que el usuario que va añadir una imagen es el usuario quien creo la propiedad
+    if (req.user.id.toString() !== property.user_id.toString()) {
+        return res.redirect('/my-properties')
+    }
+
+    try {
+        // console.log(req.file) // Son los datos de la imagen provenientes del middleware con multer
+        // Guardamos el nombre en la propiedad images 
+        property.images = req.file.filename
+        // Ponemos el campo publicado a true
+        property.publicado = true
+        // Lo guardamos en la base de datos
+        await property.save()
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 
 export {
     adminPanel,
     create, 
     save, 
-    addImage
+    addImage, 
+    storageImage
 }
