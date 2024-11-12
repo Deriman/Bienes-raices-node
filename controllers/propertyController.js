@@ -2,17 +2,18 @@ import { validationResult } from 'express-validator'
 import { Price, Category, Property } from '../models/index.js' //Modelos con las asociaciones
 
 const adminPanel = (req, res) => {
-    res.render('properties/admin-panel', {
+    res.render('properties/admin-panel', { //Renderiza la pagina principal desde de autenticarse
         pagina: 'Mis propiedades',
     })
 }
 
 const create = async (req, res) => {
-
+    // Obtiene los datos necesarios de la BD para poblar los select 
     const [categories, prices] = await Promise.all([
         Category.findAll(),
         Price.findAll()
     ])
+    //Renderiza el formulario para crear propiedades
     res.render('properties/create', {
         pagina: 'Crear una propiedad',
         csrf: req.csrfToken(),
@@ -25,7 +26,7 @@ const create = async (req, res) => {
 const save = async (req, res) => {
 
     let validation = validationResult(req)
-
+    // Resultados de la validación
     if (!validation.isEmpty()){
         const [categories, prices] = await Promise.all([
             Category.findAll(),
@@ -62,7 +63,7 @@ const save = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
-
+    // Se redirecciona a la ruta de añadir imagen pasandole el id
     const { id } = propertySaved
     res.redirect(`/my-properties/add-image/${id}`)
 }

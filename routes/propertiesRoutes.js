@@ -9,6 +9,7 @@ router.get('/my-properties', routesProtected, adminPanel)
 router.get('/my-properties/create', routesProtected, create)
 router.post('/my-properties/create', 
     routesProtected,
+    // Validaciones de los campos del formulario
     body('titulo').notEmpty().withMessage('El campo titulo no puede ir vacío.'),
     body('descripcion')
         .notEmpty().withMessage('El campo descripcion no puede ir vacío.')
