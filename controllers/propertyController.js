@@ -72,7 +72,7 @@ const addImage = async (req, res) => {
 
     const { id } = req.params
     // Validar que la propiedad exista por id
-    const property = Property.findByPk( id )
+    const property = await Property.findByPk( id )
     if (!property) {
         return res.redirect('/my-properties')
     }
@@ -86,7 +86,8 @@ const addImage = async (req, res) => {
     }
 
     res.render('properties/add-image', {
-        pagina: 'Agregar imagen'
+        pagina: `Agregar imagen: ${property.title}`,
+        property
     })
 }
 
