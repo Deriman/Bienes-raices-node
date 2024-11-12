@@ -13,6 +13,6 @@ block contenido
         form(id="img" class="dropzone border-dashed border-2 w-full min:h-96 h-auto rounded flex-col justify-center items-center" method="POST" action=`/my-properties/add-image/${property.id}`)
             input(type="hidden" name="_csrf" value= csrf)
                              
-        input(class="mt-5 w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold uppercase cursor-pointer" type="submit" value="Publicar propiedad")
+        button(id="publicar" class="mt-5 w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold uppercase cursor-pointer" type="button") Publicar propiedad
 block scripts 
     script(src="/js/addImage.js") 

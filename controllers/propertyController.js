@@ -46,7 +46,7 @@ const save = async (req, res) => {
     const { titulo:title, descripcion:description, habitaciones, estacionamientos, wc, calle, lat, lng, precio:price_id, categoria:category_id } = req.body
     const { id: user_id }= req.user
     try {
-        const propertySaved = Property.create({
+        const propertySaved = await Property.create({
             title,
             description,
             habitaciones,
@@ -92,7 +92,7 @@ const addImage = async (req, res) => {
     })
 }
 
-const storageImage = async (req, res) => {
+const storageImage = async (req, res, next) => {
     const { id } = req.params
     // Validar que la propiedad exista por id
     const property = await Property.findByPk( id )
@@ -116,6 +116,7 @@ const storageImage = async (req, res) => {
         property.publicado = true
         // Lo guardamos en la base de datos
         await property.save()
+        next()
     } catch (error) {
         console.log(error)
     }
