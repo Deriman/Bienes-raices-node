@@ -87,6 +87,7 @@ const addImage = async (req, res) => {
 
     res.render('properties/add-image', {
         pagina: `Agregar imagen: ${property.title}`,
+        csrf: req.csrfToken(),
         property
     })
 }
