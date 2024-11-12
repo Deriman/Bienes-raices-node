@@ -1,6 +1,7 @@
 import express  from "express";
 import { addImage, adminPanel, create, save } from "../controllers/propertyController.js";
 import routesProtected from "../middleware/routesProtected.js";
+import upload from "../middleware/uploadImage.js";
 import { body } from 'express-validator'
 
 const router = express.Router()
@@ -22,8 +23,9 @@ router.post('/my-properties/create',
     save
 )
 router.get('/my-properties/add-image/:id', routesProtected, addImage)
-router.post('/my-properties/add-image/:id', (req, res) => {
-    console.log('Subiendo imagen')
-})
+router.post('/my-properties/add-image/:id',
+    upload.single('image') // una sola imagen
+    // upload.array varias imagenes
+)
 
 export default router
