@@ -1,5 +1,5 @@
 import express  from "express";
-import { addImage, adminPanel, create, save, storageImage } from "../controllers/propertyController.js";
+import { addImage, adminPanel, create, edit, save, storageImage } from "../controllers/propertyController.js";
 import routesProtected from "../middleware/routesProtected.js";
 import upload from "../middleware/uploadImage.js";
 import { body } from 'express-validator'
@@ -29,5 +29,6 @@ router.post('/my-properties/add-image/:id',
     // upload.array varias imagenes
     storageImage
 )
+router.get('/my-properties/edit/:id', routesProtected, edit)
 
 export default router

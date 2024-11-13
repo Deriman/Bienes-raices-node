@@ -135,12 +135,27 @@ const storageImage = async (req, res, next) => {
     }
 }
 
-
+const edit = async (req, res) => {
+     // Obtiene los datos necesarios de la BD para poblar los select 
+     const [categories, prices] = await Promise.all([
+        Category.findAll(),
+        Price.findAll()
+    ])
+    //Renderiza el formulario para editar propiedades
+    res.render('properties/edit', {
+        pagina: 'Editar la propiedad',
+        csrf: req.csrfToken(),
+        categories,
+        prices,
+        datos: {}
+    })
+}
 
 export {
     adminPanel,
     create, 
-    save, 
+    save,
+    edit,
     addImage, 
     storageImage
 }
