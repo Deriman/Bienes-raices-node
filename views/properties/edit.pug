@@ -20,23 +20,23 @@ block contenido
                 p(class="text-gray-600") Añade información sobre la propiedad en venta.
                 div 
                     label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="titulo") Título del anuncio
-                    input(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Título de la propiedad, ej. Casa en la playa." type="text" name="titulo" #titulo value = datos.titulo ? datos.titulo : "")
+                    input(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Título de la propiedad, ej. Casa en la playa." type="text" name="titulo" #titulo value = datos.title ? datos.title : "")
                 div 
                     label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="descripcion") Descripción
-                    textarea(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Descripción de la propiedad." name="descripcion" #descripcion)= datos.descripcion ? datos.descripcion : ""
+                    textarea(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Descripción de la propiedad." name="descripcion" #descripcion)= datos.description ? datos.description : ""
                 div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
                     div(class="md:w-1/2") 
                         label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="categoria") Categoria
                         select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="categoria" #categoria)
                             option(value="") - Seleccione -
                             each category in categories 
-                                option(value=category.id selected= datos.categoria ? datos.categoria == category.id ? true : false : null)= category.name 
+                                option(value=category.id selected= datos.category_id ? datos.category_id == category.id ? true : false : null)= category.name 
                     div(class="md:w-1/2") 
                         label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="precio") Precio
                         select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="precio" #precio)
                             option(value="") - Seleccione -
                             each price in prices    
-                                option(value=price.id selected= datos.precio ? datos.precio == price.id ? true : false : null)= price.name 
+                                option(value=price.id selected= datos.price_id ? datos.price_id == price.id ? true : false : null)= price.name 
                 div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
                     div(class="md:w-1/3") 
                         label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="habitaciones") Habitaciones
@@ -68,7 +68,7 @@ block contenido
                     input(type="hidden" name="calle" id="calle" value=datos.calle ? datos.calle : '' )
                     input(type="hidden" name="lat" id="lat" value=datos.lat ? datos.lat : '')
                     input(type="hidden" name="lng" id="lng" value=datos.lng ? datos.lng : '')
-                input(class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold uppercase cursor-pointer" type="submit" value="Añadir imagen")
+                input(class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold uppercase cursor-pointer" type="submit" value="Guardar cambios")
 block scripts 
     script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
     script(src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js")

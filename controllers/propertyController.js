@@ -136,6 +136,16 @@ const storageImage = async (req, res, next) => {
 }
 
 const edit = async (req, res) => {
+    const { id } = req.params
+    // Validar que la propiedad exista por id
+    const property = await Property.findByPk( id )
+    if (!property) {
+        return res.redirect('/my-properties')
+    }
+    // Validar que el usuario que va añadir una imagen es el usuario quien creo la propiedad
+    if (req.user.id.toString() !== property.user_id.toString()) {
+        return res.redirect('/my-properties')
+    }
      // Obtiene los datos necesarios de la BD para poblar los select 
      const [categories, prices] = await Promise.all([
         Category.findAll(),
@@ -147,7 +157,7 @@ const edit = async (req, res) => {
         csrf: req.csrfToken(),
         categories,
         prices,
-        datos: {}
+        datos: property
     })
 }
 
