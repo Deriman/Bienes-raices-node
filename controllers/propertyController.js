@@ -1,9 +1,18 @@
 import { validationResult } from 'express-validator'
 import { Price, Category, Property } from '../models/index.js' //Modelos con las asociaciones
 
-const adminPanel = (req, res) => {
+const adminPanel = async (req, res) => {
+
+    const { id } = req.user
+    const properties = await Property.findAll({
+        where: {
+            user_id : id
+        }
+    })
+
     res.render('properties/admin-panel', { //Renderiza la pagina principal desde de autenticarse
         pagina: 'Mis propiedades',
+        properties
     })
 }
 
@@ -23,7 +32,7 @@ const create = async (req, res) => {
     })
 }
 
-const save = async (req, res) => {
+const save = async(req, res) => {
 
     let validation = validationResult(req)
     // Resultados de la validación
@@ -60,12 +69,12 @@ const save = async (req, res) => {
             user_id,
             images: ''
         })
+        // Se redirecciona a la ruta de añadir imagen pasandole el id
+        const { id } = propertySaved
+        res.redirect(`/my-properties/add-image/${id}`)
     } catch (error) {
         console.log(error)
     }
-    // Se redirecciona a la ruta de añadir imagen pasandole el id
-    const { id } = propertySaved
-    res.redirect(`/my-properties/add-image/${id}`)
 }
 
 const addImage = async (req, res) => {
