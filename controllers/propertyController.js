@@ -7,7 +7,11 @@ const adminPanel = async (req, res) => {
     const properties = await Property.findAll({
         where: {
             user_id : id
-        }
+        },
+        include: [
+            { model: Category, as: 'category'},
+            { model: Price, as: 'price'} // JOIN DE DOS TABLAS
+        ]
     })
 
     res.render('properties/admin-panel', { //Renderiza la pagina principal desde de autenticarse
