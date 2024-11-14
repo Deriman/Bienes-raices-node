@@ -1,5 +1,6 @@
 import { validationResult } from 'express-validator'
 import { Price, Category, Property } from '../models/index.js' //Modelos con las asociaciones
+import { unlink } from 'node:fs/promises'
 
 const adminPanel = async (req, res) => {
 
@@ -16,6 +17,7 @@ const adminPanel = async (req, res) => {
 
     res.render('properties/admin-panel', { //Renderiza la pagina principal desde de autenticarse
         pagina: 'Mis propiedades',
+        csrf: req.csrfToken(),
         properties
     })
 }
@@ -211,11 +213,30 @@ const changesSave = async(req, res) => {
     }
 }
 
+const deleteProperty = async(req, res) => {
+    const { id } = req.params
+    // Validar que la propiedad exista por id
+    const property = await Property.findByPk( id )
+    if (!property) {
+        return res.redirect('/my-properties')
+    }
+    // Validar que el usuario que va añadir una imagen es el usuario quien creo la propiedad
+    if (req.user.id.toString() !== property.user_id.toString()) {
+        return res.redirect('/my-properties')
+    }
+    // Eliminar la imagen asociada dicha propiedad
+    await unlink(`public/uploads/${property.images}`)
+    // Eliminar propiedad de la BD
+    await property.destroy()
+    res.redirect('/my-properties')
+}
+
 export {
     adminPanel,
     create, 
     save,
     edit,
+    deleteProperty,
     changesSave,
     addImage, 
     storageImage

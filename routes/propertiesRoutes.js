@@ -1,11 +1,12 @@
 import express  from "express";
-import { addImage, adminPanel, changesSave, create, edit, save, storageImage } from "../controllers/propertyController.js";
+import { addImage, adminPanel, changesSave, create, deleteProperty, edit, save, storageImage } from "../controllers/propertyController.js";
 import routesProtected from "../middleware/routesProtected.js";
 import upload from "../middleware/uploadImage.js";
 import { body } from 'express-validator'
 
 const router = express.Router()
-
+// El navegador no soporta todos los verbod de http, solo post y get. Para ello se usa un Framework tipo Angular, React
+// En cambio cuando la finalidad es una api si se diponen de los verbos http -> get, post, delete y put
 router.get('/my-properties', routesProtected, adminPanel)
 router.get('/my-properties/create', routesProtected, create)
 router.post('/my-properties/create', 
@@ -45,5 +46,7 @@ router.post('/my-properties/edit/:id',
     body('lat').notEmpty().withMessage('Ubica la propiedad en el mapa.'),
     changesSave
 )
+
+router.post('/my-properties/delete/:id', routesProtected, deleteProperty)
 
 export default router
