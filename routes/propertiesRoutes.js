@@ -1,5 +1,5 @@
 import express  from "express";
-import { addImage, adminPanel, changesSave, create, deleteProperty, edit, save, storageImage } from "../controllers/propertyController.js";
+import { addImage, adminPanel, changesSave, create, deleteProperty, edit, save, showProperty, storageImage } from "../controllers/propertyController.js";
 import routesProtected from "../middleware/routesProtected.js";
 import upload from "../middleware/uploadImage.js";
 import { body } from 'express-validator'
@@ -48,5 +48,9 @@ router.post('/my-properties/edit/:id',
 )
 
 router.post('/my-properties/delete/:id', routesProtected, deleteProperty)
+
+// AREA PÚBLICA
+
+router.get('/property/:id', showProperty)
 
 export default router

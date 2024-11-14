@@ -2,6 +2,7 @@ import { validationResult } from 'express-validator'
 import { Price, Category, Property } from '../models/index.js' //Modelos con las asociaciones
 import { unlink } from 'node:fs/promises'
 
+
 const adminPanel = async (req, res) => {
 
     const { id } = req.user
@@ -231,6 +232,13 @@ const deleteProperty = async(req, res) => {
     res.redirect('/my-properties')
 }
 
+const showProperty = (req, res) => {
+    
+    
+    res.render('properties/show', {
+        
+    })
+}
 export {
     adminPanel,
     create, 
@@ -239,5 +247,6 @@ export {
     deleteProperty,
     changesSave,
     addImage, 
-    storageImage
+    storageImage,
+    showProperty
 }
