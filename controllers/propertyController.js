@@ -56,7 +56,7 @@ const save = async(req, res) => {
     }
 
     // Añadir la propiedad a BD
-    const { titulo:title, descripcion:description, habitaciones, estacionamientos, wc, calle, lat, lng, precio:price_id, categoria:category_id } = req.body
+    const { title, description, habitaciones, estacionamientos, wc, calle, lat, lng, precio:price_id, categoria:category_id } = req.body
     const { id: user_id }= req.user
     try {
         const propertySaved = await Property.create({
@@ -171,16 +171,46 @@ const changesSave = async(req, res) => {
             Price.findAll()
         ])
            //Renderiza el formulario para editar propiedades
-    res.render('properties/edit', {
-        pagina: 'Editar la propiedad',
-        csrf: req.csrfToken(),
-        categories,
-        prices,
-        errors: validation.array(),
-        datos: req.body
-    })
+        res.render('properties/edit', {
+            pagina: 'Editar la propiedad',
+            csrf: req.csrfToken(),
+            categories,
+            prices,
+            errors: validation.array(),
+            datos: req.body
+        })
+    }
+    const { id } = req.params
+    // Validar que la propiedad exista por id
+    const property = await Property.findByPk( id )
+    if (!property) {
+        return res.redirect('/my-properties')
+    }
+    // Validar que el usuario que va añadir una imagen es el usuario quien creo la propiedad
+    if (req.user.id.toString() !== property.user_id.toString()) {
+        return res.redirect('/my-properties')
+    }
+    try {
+        const { title, description, habitaciones, estacionamientos, wc, calle, lat, lng, precio:price_id, categoria:category_id } = req.body
+        property.set({
+            title, 
+            description,
+            estacionamientos,
+            wc,
+            habitaciones,
+            price_id,
+            category_id,
+            calle,
+            lat,
+            lng
+        })
+        await property.save()
+        res.redirect('/my-properties')
+    } catch (error) {
+        console.log({error})
     }
 }
+
 export {
     adminPanel,
     create, 

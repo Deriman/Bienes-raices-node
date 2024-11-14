@@ -38,9 +38,9 @@ router.post('/my-properties/edit/:id',
     body('description')
         .notEmpty().withMessage('El campo descripcion no puede ir vacío.')
         .isLength({ max: 200}).withMessage('El campo descripcion es demasiado largo.'),
-    body('category').isNumeric().withMessage('Selecciona una categoria para la propiedad.'),
+    body('categoria').isNumeric().withMessage('Selecciona una categoria para la propiedad.'),
     body('habitaciones').isNumeric().withMessage('Selecciona las habitaciones que tiene la propiedad.'),
-    body('price').isNumeric().withMessage('Selecciona un rango de precios para la propiedad'),
+    body('precio').isNumeric().withMessage('Selecciona un rango de precios para la propiedad'),
     body('estacionamientos').isNumeric().withMessage('Selecciona los estacionamientos que tiene la propiedad.'),
     body('lat').notEmpty().withMessage('Ubica la propiedad en el mapa.'),
     changesSave
