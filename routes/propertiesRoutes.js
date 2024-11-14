@@ -1,5 +1,5 @@
 import express  from "express";
-import { addImage, adminPanel, create, edit, save, storageImage } from "../controllers/propertyController.js";
+import { addImage, adminPanel, changesSave, create, edit, save, storageImage } from "../controllers/propertyController.js";
 import routesProtected from "../middleware/routesProtected.js";
 import upload from "../middleware/uploadImage.js";
 import { body } from 'express-validator'
@@ -30,5 +30,20 @@ router.post('/my-properties/add-image/:id',
     storageImage
 )
 router.get('/my-properties/edit/:id', routesProtected, edit)
+
+router.post('/my-properties/edit/:id', 
+    routesProtected,
+    // Validaciones de los campos del formulario
+    body('title').notEmpty().withMessage('El campo titulo no puede ir vacío.'),
+    body('description')
+        .notEmpty().withMessage('El campo descripcion no puede ir vacío.')
+        .isLength({ max: 200}).withMessage('El campo descripcion es demasiado largo.'),
+    body('category').isNumeric().withMessage('Selecciona una categoria para la propiedad.'),
+    body('habitaciones').isNumeric().withMessage('Selecciona las habitaciones que tiene la propiedad.'),
+    body('price').isNumeric().withMessage('Selecciona un rango de precios para la propiedad'),
+    body('estacionamientos').isNumeric().withMessage('Selecciona los estacionamientos que tiene la propiedad.'),
+    body('lat').notEmpty().withMessage('Ubica la propiedad en el mapa.'),
+    changesSave
+)
 
 export default router

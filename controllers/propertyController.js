@@ -160,12 +160,33 @@ const edit = async (req, res) => {
         datos: property
     })
 }
+const changesSave = async(req, res) => {
 
+    console.log(req.body)
+    let validation = validationResult(req)
+    // Resultados de la validación
+    if (!validation.isEmpty()){
+        const [categories, prices] = await Promise.all([
+            Category.findAll(),
+            Price.findAll()
+        ])
+           //Renderiza el formulario para editar propiedades
+    res.render('properties/edit', {
+        pagina: 'Editar la propiedad',
+        csrf: req.csrfToken(),
+        categories,
+        prices,
+        errors: validation.array(),
+        datos: req.body
+    })
+    }
+}
 export {
     adminPanel,
     create, 
     save,
     edit,
+    changesSave,
     addImage, 
     storageImage
 }

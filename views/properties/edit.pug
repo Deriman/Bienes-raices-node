@@ -13,27 +13,27 @@ block contenido
             each error in errors 
                 p(class="bg-red-600 text-white uppercase text-xs text-center p-2 mb-1 font-bold")=error.msg
     div(class="bg-white shadow py-8 px-4 rounded mx-auto max-w-4xl my-10 md:px-10")
-        form(class="spce-y-8" method="POST" action="/my-properties/create")
+        form(class="spce-y-8" method="POST" )
             input(type="hidden" name="_csrf" value= csrf)
             div(class="space-y-5")
                 h3(class="text-lg leading-6 font-medium text-gray-900") Información general
                 p(class="text-gray-600") Añade información sobre la propiedad en venta.
                 div 
-                    label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="titulo") Título del anuncio
-                    input(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Título de la propiedad, ej. Casa en la playa." type="text" name="titulo" #titulo value = datos.title ? datos.title : "")
+                    label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="title") Título del anuncio
+                    input(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Título de la propiedad, ej. Casa en la playa." type="text" name="title" #titulo value = datos.title ? datos.title : "")
                 div 
-                    label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="descripcion") Descripción
-                    textarea(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Descripción de la propiedad." name="descripcion" #descripcion)= datos.description ? datos.description : ""
+                    label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="description") Descripción
+                    textarea(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Descripción de la propiedad." name="description" #descripcion)= datos.description ? datos.description : ""
                 div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
                     div(class="md:w-1/2") 
-                        label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="categoria") Categoria
-                        select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="categoria" #categoria)
+                        label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="category") Categoria
+                        select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="category" #categoria)
                             option(value="") - Seleccione -
                             each category in categories 
                                 option(value=category.id selected= datos.category_id ? datos.category_id == category.id ? true : false : null)= category.name 
                     div(class="md:w-1/2") 
                         label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="precio") Precio
-                        select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="precio" #precio)
+                        select(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="price" #precio)
                             option(value="") - Seleccione -
                             each price in prices    
                                 option(value=price.id selected= datos.price_id ? datos.price_id == price.id ? true : false : null)= price.name 
