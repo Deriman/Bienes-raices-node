@@ -1,4 +1,12 @@
 extends ../layout/app
 
 block contenido 
-    h1 Mostrando propiedad
+    //-pre= JSON.stringify(property, undefined, 2)
+    div(class="py-5")
+        h1(class="text-center font-extrabold text-4xl my-10")= property.title
+        div     
+            a(href="#" class="font-bold text-gray-600 text-sm") Categoria: 
+                span(class="font-normal")= property.category.name
+        div(class="mt-5 md:flex md:gap-4")
+            div(class="md:w-2/3") 1
+            div(class="md:w-1/3") 2

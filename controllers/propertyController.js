@@ -232,11 +232,22 @@ const deleteProperty = async(req, res) => {
     res.redirect('/my-properties')
 }
 
-const showProperty = (req, res) => {
-    
+const showProperty = async(req, res) => {
+    const { id } = req.params
+
+    const property = await Property.findByPk(id,{
+        include: [
+            { model: Category, as: 'category'},
+            { model: Price, as: 'price'} // JOIN DE DOS TABLAS
+        ]
+    })
+    if (!property) {
+        res.redirect('/404')
+    }
     
     res.render('properties/show', {
-        
+        property,
+        pagina: property.title
     })
 }
 export {
