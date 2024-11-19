@@ -1,5 +1,8 @@
 extends ../layout/app
 
+block styles 
+    link(rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css")
+
 block contenido 
     //-pre= JSON.stringify(property, undefined, 2)
     div(class="py-5")
@@ -22,4 +25,14 @@ block contenido
                             span(class="text-gray-800 block text-lg")= property.habitaciones
                         p(class="text-gray-600 font-bold text-xs") Precio   
                             span(class="text-gray-800 block text-lg")= property.price.name
-            div(class="md:w-1/3") 2
+            div(class="md:w-1/3") 
+                h3(class="text-center py-10 leading-6 text-2xl font-bold text-gray-900") Ubicación 
+                div(class="h-96" id="mapa")
+                    p(id="lat" class="hidden")= property.lat
+                    p(id="lng" class="hidden")= property.lng
+                div(class="p-5")
+                    p(class="text-gray-600 font-bold text-xs") Dirección 
+                        span(id="calle" class="text-gray-800 block text-lg")= property.calle
+block scripts 
+    script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
+    script(src="/js/showMap.js") 

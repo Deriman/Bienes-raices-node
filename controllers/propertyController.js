@@ -8,11 +8,11 @@ const adminPanel = async (req, res) => {
     const { id } = req.user
     const properties = await Property.findAll({
         where: {
-            user_id : id
+            user_id: id
         },
         include: [
-            { model: Category, as: 'category'},
-            { model: Price, as: 'price'} // JOIN DE DOS TABLAS
+            { model: Category, as: 'category' },
+            { model: Price, as: 'price' } // JOIN DE DOS TABLAS
         ]
     })
 
@@ -39,11 +39,11 @@ const create = async (req, res) => {
     })
 }
 
-const save = async(req, res) => {
+const save = async (req, res) => {
 
     let validation = validationResult(req)
     // Resultados de la validación
-    if (!validation.isEmpty()){
+    if (!validation.isEmpty()) {
         const [categories, prices] = await Promise.all([
             Category.findAll(),
             Price.findAll()
@@ -59,18 +59,18 @@ const save = async(req, res) => {
     }
 
     // Añadir la propiedad a BD
-    const { title, description, habitaciones, estacionamientos, wc, calle, lat, lng, precio:price_id, categoria:category_id } = req.body
-    const { id: user_id }= req.user
+    const { title, description, habitaciones, estacionamientos, wc, calle, lat, lng, precio: price_id, categoria: category_id } = req.body
+    const { id: user_id } = req.user
     try {
         const propertySaved = await Property.create({
             title,
             description,
             habitaciones,
             estacionamientos,
-            wc, 
-            calle, 
+            wc,
+            calle,
             lat,
-            lng, 
+            lng,
             price_id,
             category_id,
             user_id,
@@ -88,7 +88,7 @@ const addImage = async (req, res) => {
 
     const { id } = req.params
     // Validar que la propiedad exista por id
-    const property = await Property.findByPk( id )
+    const property = await Property.findByPk(id)
     if (!property) {
         return res.redirect('/my-properties')
     }
@@ -111,7 +111,7 @@ const addImage = async (req, res) => {
 const storageImage = async (req, res, next) => {
     const { id } = req.params
     // Validar que la propiedad exista por id
-    const property = await Property.findByPk( id )
+    const property = await Property.findByPk(id)
     if (!property) {
         return res.redirect('/my-properties')
     }
@@ -141,7 +141,7 @@ const storageImage = async (req, res, next) => {
 const edit = async (req, res) => {
     const { id } = req.params
     // Validar que la propiedad exista por id
-    const property = await Property.findByPk( id )
+    const property = await Property.findByPk(id)
     if (!property) {
         return res.redirect('/my-properties')
     }
@@ -149,8 +149,8 @@ const edit = async (req, res) => {
     if (req.user.id.toString() !== property.user_id.toString()) {
         return res.redirect('/my-properties')
     }
-     // Obtiene los datos necesarios de la BD para poblar los select 
-     const [categories, prices] = await Promise.all([
+    // Obtiene los datos necesarios de la BD para poblar los select 
+    const [categories, prices] = await Promise.all([
         Category.findAll(),
         Price.findAll()
     ])
@@ -163,17 +163,17 @@ const edit = async (req, res) => {
         datos: property
     })
 }
-const changesSave = async(req, res) => {
+const changesSave = async (req, res) => {
 
     console.log(req.body)
     let validation = validationResult(req)
     // Resultados de la validación
-    if (!validation.isEmpty()){
+    if (!validation.isEmpty()) {
         const [categories, prices] = await Promise.all([
             Category.findAll(),
             Price.findAll()
         ])
-           //Renderiza el formulario para editar propiedades
+        //Renderiza el formulario para editar propiedades
         res.render('properties/edit', {
             pagina: 'Editar la propiedad',
             csrf: req.csrfToken(),
@@ -185,7 +185,7 @@ const changesSave = async(req, res) => {
     }
     const { id } = req.params
     // Validar que la propiedad exista por id
-    const property = await Property.findByPk( id )
+    const property = await Property.findByPk(id)
     if (!property) {
         return res.redirect('/my-properties')
     }
@@ -194,9 +194,9 @@ const changesSave = async(req, res) => {
         return res.redirect('/my-properties')
     }
     try {
-        const { title, description, habitaciones, estacionamientos, wc, calle, lat, lng, precio:price_id, categoria:category_id } = req.body
+        const { title, description, habitaciones, estacionamientos, wc, calle, lat, lng, precio: price_id, categoria: category_id } = req.body
         property.set({
-            title, 
+            title,
             description,
             estacionamientos,
             wc,
@@ -210,14 +210,14 @@ const changesSave = async(req, res) => {
         await property.save()
         res.redirect('/my-properties')
     } catch (error) {
-        console.log({error})
+        console.log({ error })
     }
 }
 
-const deleteProperty = async(req, res) => {
+const deleteProperty = async (req, res) => {
     const { id } = req.params
     // Validar que la propiedad exista por id
-    const property = await Property.findByPk( id )
+    const property = await Property.findByPk(id)
     if (!property) {
         return res.redirect('/my-properties')
     }
@@ -232,19 +232,19 @@ const deleteProperty = async(req, res) => {
     res.redirect('/my-properties')
 }
 
-const showProperty = async(req, res) => {
+const showProperty = async (req, res) => {
     const { id } = req.params
 
-    const property = await Property.findByPk(id,{
+    const property = await Property.findByPk(id, {
         include: [
-            { model: Category, as: 'category'},
-            { model: Price, as: 'price'} // JOIN DE DOS TABLAS
+            { model: Category, as: 'category' },
+            { model: Price, as: 'price' } // JOIN DE DOS TABLAS
         ]
     })
     if (!property) {
         res.redirect('/404')
     }
-    
+
     res.render('properties/show', {
         property,
         pagina: property.title
@@ -252,12 +252,12 @@ const showProperty = async(req, res) => {
 }
 export {
     adminPanel,
-    create, 
+    create,
     save,
     edit,
     deleteProperty,
     changesSave,
-    addImage, 
+    addImage,
     storageImage,
     showProperty
 }
