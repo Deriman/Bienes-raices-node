@@ -5,6 +5,13 @@ import { unlink } from 'node:fs/promises'
 
 const adminPanel = async (req, res) => {
 
+    // Query strings /my-properties?pagina=1&orden=DESC...
+    const { pagina: paginaActual } = req.query
+    const expression = /^[0-9]$/
+    if (!expression.test(paginaActual)) {
+        return res.redirect('/my-properties?pagina=1')
+    }
+
     const { id } = req.user
     const properties = await Property.findAll({
         where: {
@@ -163,6 +170,7 @@ const edit = async (req, res) => {
         datos: property
     })
 }
+
 const changesSave = async (req, res) => {
 
     console.log(req.body)
@@ -250,6 +258,7 @@ const showProperty = async (req, res) => {
         pagina: property.title
     })
 }
+
 export {
     adminPanel,
     create,
