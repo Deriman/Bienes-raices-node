@@ -35,5 +35,11 @@ block contenido
                                 form(method="POST" action=`/my-properties/delete/${property.id}`)
                                     input(type="hidden" name="_csrf" value=csrf)
                                     input(type="submit" class="px-2 py-2 w-full cursor-pointer md:py-1 text-xs leading-5 font-semibold rounded bg-red-100 text-red-800" value="Eliminar")
+            div(class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6")
+                div 
+                    nav(class="relative z-0 inline-flex rounded-md shadow-md")
+                        - let n = 1;
+                            while n <= paginas 
+                                a(href=`/my-properties?pagina=${n}` class=`${paginaActual == n ? 'bg-indigo-50 border-indigo-500 text-indigo-600' : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'} relative inline-flex items-center px-4 py-2 border text-sm font-medium`) #{n++} 
     else 
         p(class="text-center") No hay propiedades.

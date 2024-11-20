@@ -20,22 +20,31 @@ const adminPanel = async (req, res) => {
         const limit = 4
         const offset = ((paginaActual * limit) - limit)
 
-        const properties = await Property.findAll({
-            limit,
-            offset,
-            where: {
-                user_id: id
-            },
-            include: [
-                { model: Category, as: 'category' },
-                { model: Price, as: 'price' } // JOIN DE DOS TABLAS
-            ]
-        })
+        const [properties, total] = await Promise.all([
+            Property.findAll({
+                limit,
+                offset,
+                where: {
+                    user_id: id
+                },
+                include: [
+                    { model: Category, as: 'category' },
+                    { model: Price, as: 'price' } // JOIN DE DOS TABLAS
+                ]
+            }),
+            Property.count({
+                where: {
+                    user_id: id
+                }
+            })
+        ])
 
         res.render('properties/admin-panel', { //Renderiza la pagina principal desde de autenticarse
             pagina: 'Mis propiedades',
             csrf: req.csrfToken(),
-            properties
+            properties,
+            paginas: Math.ceil(total / limit),
+            paginaActual
         })
 
     } catch (error) {
