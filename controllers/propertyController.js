@@ -7,27 +7,41 @@ const adminPanel = async (req, res) => {
 
     // Query strings /my-properties?pagina=1&orden=DESC...
     const { pagina: paginaActual } = req.query
+    // Validar mediante expresión regular para números
     const expression = /^[0-9]$/
     if (!expression.test(paginaActual)) {
         return res.redirect('/my-properties?pagina=1')
     }
 
-    const { id } = req.user
-    const properties = await Property.findAll({
-        where: {
-            user_id: id
-        },
-        include: [
-            { model: Category, as: 'category' },
-            { model: Price, as: 'price' } // JOIN DE DOS TABLAS
-        ]
-    })
+    try {
+        const { id } = req.user
 
-    res.render('properties/admin-panel', { //Renderiza la pagina principal desde de autenticarse
-        pagina: 'Mis propiedades',
-        csrf: req.csrfToken(),
-        properties
-    })
+        // Establecer paginador mediante el limit y offset
+        const limit = 4
+        const offset = ((paginaActual * limit) - limit)
+
+        const properties = await Property.findAll({
+            limit,
+            offset,
+            where: {
+                user_id: id
+            },
+            include: [
+                { model: Category, as: 'category' },
+                { model: Price, as: 'price' } // JOIN DE DOS TABLAS
+            ]
+        })
+
+        res.render('properties/admin-panel', { //Renderiza la pagina principal desde de autenticarse
+            pagina: 'Mis propiedades',
+            csrf: req.csrfToken(),
+            properties
+        })
+
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 
 const create = async (req, res) => {
@@ -66,7 +80,7 @@ const save = async (req, res) => {
     }
 
     // Añadir la propiedad a BD
-    const { title, description, habitaciones, estacionamientos, wc, calle, lat, lng, precio: price_id, categoria: category_id } = req.body
+    const { titulo: title, descripcion: description, habitaciones, estacionamientos, wc, calle, lat, lng, precio: price_id, categoria: category_id } = req.body
     const { id: user_id } = req.user
     try {
         const propertySaved = await Property.create({
