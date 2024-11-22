@@ -44,7 +44,10 @@ const adminPanel = async (req, res) => {
             csrf: req.csrfToken(),
             properties,
             paginas: Math.ceil(total / limit),
-            paginaActual
+            paginaActual,
+            total,
+            offset,
+            limit
         })
 
     } catch (error) {
